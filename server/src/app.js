@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
+const clinicsRouter = require('./routes/clinics');
 
 // load env variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') })
@@ -37,6 +38,9 @@ app.use(function (err, req, res, next) {
         error: env === 'development' ? err : {}
     });
 });
+
+//routes
+app.use('/api/v1', clinicsRouter);
 
 
 app.listen(port, function (err) {
