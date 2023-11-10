@@ -178,3 +178,5 @@ server/app.js
 
 sample.json
 server/temp.http
+
+.env

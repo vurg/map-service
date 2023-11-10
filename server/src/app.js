@@ -3,17 +3,16 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const mongoose = require("mongoose");
-const path = require("path");
 const dotenv = require("dotenv");
 const clinicsRouter = require('./routes/clinics');
 
 // load env variables
-dotenv.config({ path: path.resolve(__dirname, '../.env') })
+dotenv.config({ path:'../.env'})
 
 //variables
 const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/MapServiceDB';
 const port = process.env.PORT || 8081;
-
+ 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function (err) {
     if (err) {
