@@ -1,10 +1,12 @@
 const express = require('express')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser') this is already included inside express
 const cors = require('cors')
 const morgan = require('morgan')
 const mongoose = require("mongoose");
 const path = require("path");
 const dotenv = require("dotenv");
+
+// load env variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 //variables
@@ -23,9 +25,8 @@ mongoose.connect(mongoURI).catch(function (err) {
 
 const app = express()
 app.use(morgan('combined'))
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(cors())
-
 
 const env = app.get('env');
 // eslint-disable-next-line no-unused-vars
@@ -36,8 +37,6 @@ app.use(function (err, req, res, next) {
         error: env === 'development' ? err : {}
     });
 });
-
-// app.use('/api', controller);
 
 
 app.listen(port, function (err) {
