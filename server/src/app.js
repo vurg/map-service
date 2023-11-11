@@ -37,6 +37,15 @@ app.post("/send-mqtt", function (req, res) {
     res.status(200).send("Message sent via mqtt");
 });
 
+app.get("/api", function (req, res) {
+    res.json({ message: "test to see if this fixes the pipeline" });
+});
+  
+  
+// Catch all non-error handler for api (i.e., 404 Not Found)
+app.use("/api/*", function (req, res) {
+    res.status(404).json({ message: "Not Found" });
+});
 
 //routes
 app.use('/api/v1', clinicsRouter);
