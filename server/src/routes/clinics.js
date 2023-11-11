@@ -39,5 +39,13 @@ router.patch('/clinics/:id', async (req, res, next) => {
     })
 })
 
+router.delete('/clinics/:id', async (req, res, next) => {
+  const id = req.params.id;
+  ClinicModel.findByIdAndDelete(id).then(
+    res.status(200).json({ message: "clinic deleted" }))
+    .catch(err => {
+      return next(err);
+    })
+})
 
 module.exports = router;
