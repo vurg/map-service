@@ -12,11 +12,11 @@ router.get('/clinics', async (req, res) => {
 })
 
 router.post('/clinics', async (req, res, next) => {
-    const clinics = new ClinicModel(req.body);
-    clinics
+    const clinic = new ClinicModel(req.body);
+    clinic
       .save()
-      .then(function (clinics) {
-        res.status(201).json(clinics);
+      .then(function (clinic) {
+        res.status(201).json(clinic);
       })
       .catch(function (error) {
        if(error.code===11000){
@@ -25,5 +25,19 @@ router.post('/clinics', async (req, res, next) => {
         return next(error);
       });
 })
+
+router.patch('/clinics/:id', async (req, res, next) => {
+    const id = req.params.id;
+    ClinicModel.findById(id).then(function (clinic){
+      Object.assign(clinic, req.body);
+      clinic.save().then(function (clinic){
+        return res.status(200).json(clinic); 
+      })
+
+    }).catch(err=>{
+      return next(err);
+    })
+})
+
 
 module.exports = router;
