@@ -41,11 +41,17 @@ router.patch('/clinics/:id', async (req, res, next) => {
 
 router.delete('/clinics/:id', async (req, res, next) => {
   const id = req.params.id;
-  ClinicModel.findByIdAndDelete(id).then(
-    res.status(200).json({ message: "clinic deleted" }))
+  ClinicModel.findByIdAndDelete(id)
+    .then(clinic => {
+      if (!clinic) {
+        return res.status(404).json({ error: 'Clinic not found' });
+      }
+      res.status(200).json({ message: "Clinic deleted", deletedClinic: clinic });
+    })
     .catch(err => {
       return next(err);
-    })
-})
+    });
+});
+
 
 module.exports = router;
