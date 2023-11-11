@@ -16,7 +16,7 @@ router.post('/clinics', async (req, res, next) => {
     clinic
       .save()
       .then(function (clinic) {
-        res.status(201).json(clinic);
+        res.status(201).json({ message: "Clinic has been created", clinic: clinic });
       })
       .catch(function (error) {
        if(error.code===11000){
@@ -31,7 +31,7 @@ router.patch('/clinics/:id', async (req, res, next) => {
     ClinicModel.findById(id).then(function (clinic){
       Object.assign(clinic, req.body);
       clinic.save().then(function (clinic){
-        return res.status(200).json(clinic); 
+        return res.status(200).json({ message: "Clinic has been updated", clinic: clinic }); 
       })
 
     }).catch(err=>{
@@ -46,7 +46,7 @@ router.delete('/clinics/:id', async (req, res, next) => {
       if (!clinic) {
         return res.status(404).json({ error: 'Clinic not found' });
       }
-      res.status(200).json({ message: "Clinic deleted", deletedClinic: clinic });
+      res.status(200).json({ message: "Clinic has been deleted", deletedClinic: clinic });
     })
     .catch(err => {
       return next(err);

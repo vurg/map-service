@@ -12,7 +12,7 @@ dotenv.config({ path: '../.env' })
 
 //variables
 const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/MapServiceDB';
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function (err) {
