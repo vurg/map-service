@@ -38,14 +38,14 @@ app.post("/send-mqtt", function (req, res) {
 });
 
 app.get("/api", function (req, res) {
-    res.json({ message: "test to see if this fixes the pipeline" });
+    res.json({ message: "hello world" });
 });
   
   
-// Catch all non-error handler for api (i.e., 404 Not Found)
-app.use("/api/*", function (req, res) {
-    res.status(404).json({ message: "Not Found" });
-});
+// // Catch all non-error handler for api (i.e., 404 Not Found)
+// app.use("/api/*", function (req, res) {
+//     res.status(404).json({ message: "Not Found" });
+// });
 
 //routes
 app.use('/api/v1', clinicsRouter);
