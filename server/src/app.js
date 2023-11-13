@@ -1,11 +1,9 @@
 const express = require('express')
-// const bodyParser = require('body-parser') this is already included inside express
 const cors = require('cors')
 const morgan = require('morgan')
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const clinicsRouter = require('./routes/clinics');
-const mqttHandler = require('./mqtt');
 
 // load env variables
 dotenv.config({ path: '../.env' })
@@ -25,12 +23,12 @@ mongoose.connect(mongoURI).catch(function (err) {
 });
 
 const app = express()
+const mqttClient = require('./mqtt');
 app.use(morgan('combined'))
 app.use(express.json())
 app.use(cors())
 
-const mqttClient = new mqttHandler();
-mqttClient.connect();
+
 
 app.post("/send-mqtt", function (req, res) {
     mqttClient.sendMessage(req.body.message);
