@@ -10,7 +10,7 @@ dotenv.config({ path: '../.env' })
 
 //variables
 const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/MapServiceDB';
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(mongoURI).catch(function (err) {
@@ -35,6 +35,15 @@ app.post("/send-mqtt", function (req, res) {
     res.status(200).send("Message sent via mqtt");
 });
 
+app.get("/api", function (req, res) {
+    res.json({ message: "hello world" });
+});
+  
+  
+// // Catch all non-error handler for api (i.e., 404 Not Found)
+// app.use("/api/*", function (req, res) {
+//     res.status(404).json({ message: "Not Found" });
+// });
 
 //routes
 app.use('/api/v1', clinicsRouter);

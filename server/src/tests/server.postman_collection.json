@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "3145b321-77af-43cd-8c38-87d17bd48444",
+		"name": "server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29691657"
+	},
+	"item": [
+		{
+			"name": "postClinic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful clinic creation\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql(\"Clinic has been created\");\r",
+							"    pm.environment.set(\"clinic\", data.clinic._id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clinicId\":\"001\",\r\n    \"address\": \"Högaffelsgatan 15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/clinics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"clinics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClinics",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful clinic response\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql(\"Clinic has been fetched\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/clinics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"clinics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editClinic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful clinic edit\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql(\"Clinic has been updated\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"gårdstensvägen 52\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/clinics/{{clinic}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"clinics",
+						"{{clinic}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteClinic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful clinic deletion\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql(\"Clinic has been deleted\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/clinics/{{clinic}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"clinics",
+						"{{clinic}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mqtt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful mqtt mesage request\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"Hello World - mqtt test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/send-mqtt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"send-mqtt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

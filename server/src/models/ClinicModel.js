@@ -20,26 +20,28 @@ const ClinicSchema = new mongoose.Schema({
         },
         formattedAddress: String
     },
-    adress:{ //this will be used to get the coordinates from the api and not get saved to database
+    address:{ //this will be used to get the coordinates from the api and not get saved to database
         type: String,
         required: true,
         trim: true
     },
-    createdAt: {
+    date: {
         type: Date,
         default: Date.now
     }
 })
 
-ClinicSchema.pre('save', async function (next) {
-    const locationData = await geocoder.geocode(this.adress);
-    this.location = {
-        type: 'Point',
-        coordinates: [locationData[0].longitude, locationData[0].latitude], //this is a array of coordinates
-        formattedAddress: locationData[0].formattedAddress
-    }
-    this.adress = undefined;    // this will prevent his from getting saved to the database and instead we will save it as formattedAddress
-    console.log(this.location);
-    next();
-})
+if (process.env.CI !== 'true') {
+    ClinicSchema.pre('save', async function (next) {
+        const locationData = await geocoder.geocode(this.address);
+        this.location = {
+            type: 'Point',
+            coordinates: [locationData[0].longitude, locationData[0].latitude], //this is a array of coordinates
+            formattedAddress: locationData[0].formattedAddress
+        }
+        this.address = undefined;    // this will prevent his from getting saved to the database and instead we will save it as formattedAddress
+        console.log(this.location);
+        next();
+    })
+}
 module.exports = mongoose.model('Clinic', ClinicSchema);
