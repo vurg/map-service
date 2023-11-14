@@ -20,12 +20,12 @@ const ClinicSchema = new mongoose.Schema({
         },
         formattedAddress: String
     },
-    adress:{ //this will be used to get the coordinates from the api and not get saved to database
+    address:{ //this will be used to get the coordinates from the api and not get saved to database
         type: String,
         required: true,
         trim: true
     },
-    createdAt: {
+    date: {
         type: Date,
         default: Date.now
     }
