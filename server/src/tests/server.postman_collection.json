@@ -30,7 +30,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"clinicId\":\"001\",\r\n    \"adress\": \"Högaffelsgatan 15\"\r\n}",
+					"raw": "{\r\n    \"clinicId\":\"001\",\r\n    \"address\": \"Högaffelsgatan 15\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +125,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"adress\": \"gårdstensvägen 52\"\r\n}",
+					"raw": "{\r\n    \"address\": \"gårdstensvägen 52\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
