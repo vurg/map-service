@@ -6,8 +6,9 @@ const mqttClient = require('../mqtt');
 router.get('/clinics', async (req, res) => {
     try {
         const clinics = await ClinicModel.find();
-        mqttClient.sendMessage('clinic location fetched');
-        res.status(200).json({ message: "Clinic has been fetched", clinics: clinics });
+        const message = "Clinic has been fetched"
+        mqttClient.sendMessage(message + " " + clinics.toString());
+        res.status(200).json({ message: message, clinics: clinics });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -18,8 +19,9 @@ router.post('/clinics', async (req, res, next) => {
     clinic
       .save()
       .then(function (clinic) {
-        mqttClient.sendMessage('clinic location created');
-        res.status(201).json({ message: "Clinic has been created", clinic: clinic });
+        const message = "Clinic has been created"
+        mqttClient.sendMessage(message + " " + clinic.toString());
+        res.status(201).json({ message: message, clinic: clinic });
       })
       .catch(function (error) {
        if(error.code===11000){
@@ -34,8 +36,9 @@ router.patch('/clinics/:id', async (req, res, next) => {
     ClinicModel.findById(id).then(function (clinic){
       Object.assign(clinic, req.body);
       clinic.save().then(function (clinic){
-        mqttClient.sendMessage('clinic location updated');
-        return res.status(200).json({ message: "Clinic has been updated", clinic: clinic }); 
+        const message = "Clinic has been updated"
+        mqttClient.sendMessage(message + " " + clinic.toString());
+        return res.status(200).json({ message: message , clinic: clinic }); 
       })
 
     }).catch(err=>{
@@ -50,8 +53,9 @@ router.delete('/clinics/:id', async (req, res, next) => {
       if (!clinic) {
         return res.status(404).json({ error: 'Clinic not found' });
       }
-      mqttClient.sendMessage('clinic location deleted');
-      res.status(200).json({ message: "Clinic has been deleted", deletedClinic: clinic });
+      const message = "Clinic has been deleted"
+      mqttClient.sendMessage(message + " " + clinic.toString());
+      res.status(200).json({ message: message, deletedClinic: clinic });
     })
     .catch(err => {
       return next(err);

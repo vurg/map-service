@@ -2,25 +2,19 @@ const mongoose = require('mongoose');
 const geocoder = require('../utils/geocoder');
 
 const ClinicSchema = new mongoose.Schema({
-    clinicId: {
+    clinicName: {
         type: String,
         required: true,
         unique: true
     },
     location: {
-        type: {
-            type: String,
-            enum: ['Point'], // this is the goejson point
-            // required: true
-        },
         coordinates: {
             type: [Number],
-            // required: true
-            index: '2dsphere'
+            index: '2dsphere' // this is MongoDB's geospatial operators, such as $near, $geoWithin, can be deleted if not used
         },
         formattedAddress: String
     },
-    address:{ //this will be used to get the coordinates from the api and not get saved to database
+    address:{ //this is used to get the coordinates from the api and not get saved to database
         type: String,
         required: true,
         trim: true
@@ -34,14 +28,14 @@ const ClinicSchema = new mongoose.Schema({
 if (process.env.CI !== 'true') {
     ClinicSchema.pre('save', async function (next) {
         const locationData = await geocoder.geocode(this.address);
+        const modifiedFormattedAddress = locationData[0].formattedAddress.replace(/ O /, ' ');
         this.location = {
-            type: 'Point',
-            coordinates: [locationData[0].longitude, locationData[0].latitude], //this is a array of coordinates
-            formattedAddress: locationData[0].formattedAddress
-        }
-        this.address = undefined;    // this will prevent his from getting saved to the database and instead we will save it as formattedAddress
-        console.log(this.location);
+            coordinates: [locationData[0].longitude, locationData[0].latitude],
+            formattedAddress: modifiedFormattedAddress
+        };
+        this.address = undefined;
         next();
-    })
+    });
+    
 }
 module.exports = mongoose.model('Clinic', ClinicSchema);
