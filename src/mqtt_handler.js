@@ -3,7 +3,7 @@ const mqtt = require('mqtt');
 class MqttHandler {
     constructor() {
         this.mqttClient = null;
-        this.host = process.env.MQTT_HOST ||'mqtt://broker.hivemq.com:1883';
+        this.host = process.env.MQTT_HOST;
         this.username = process.env.MQTT_USERNAME;
         this.password = process.env.MQTT_PASSWORD;
     }
@@ -20,7 +20,7 @@ class MqttHandler {
 
         // Connection callback
         this.mqttClient.on('connect', () => {
-            console.log(`mqtt client connected`);
+            console.log(`mqtt client connected ` +  this.host);
         });
 
         // mqtt subscriptions
