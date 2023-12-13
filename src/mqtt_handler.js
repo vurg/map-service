@@ -3,9 +3,10 @@ const mqtt = require('mqtt');
 class MqttHandler {
     constructor() {
         this.mqttClient = null;
-        this.host = process.env.MQTT_HOST ||'mqtt://broker.hivemq.com:1883';
+        this.host = process.env.MQTT_HOST;
         this.username = process.env.MQTT_USERNAME;
         this.password = process.env.MQTT_PASSWORD;
+        console.log(this.host);
     }
 
     connect() {
@@ -24,12 +25,12 @@ class MqttHandler {
         });
 
         // mqtt subscriptions
-        this.mqttClient.subscribe('mytopic', { qos: 0 });
+        // this.mqttClient.subscribe('mytopic', { qos: 0 });
 
         // When a message arrives, console.log it
-        this.mqttClient.on('message', function (topic, message) {
-            console.log(message.toString());
-        });
+        // this.mqttClient.on('message', function (topic, message) {
+        //    console.log(message.toString());
+        //});
 
         this.mqttClient.on('close', () => {
             console.log(`mqtt client disconnected`);

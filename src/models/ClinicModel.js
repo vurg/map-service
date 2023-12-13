@@ -7,6 +7,17 @@ const ClinicSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    dentistId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    // adding email here for consistency
+    clinicEmail: {
+        type: String,
+        required: true,
+        unique: true
+    },
     location: {
         coordinates: {
             type: [Number],
