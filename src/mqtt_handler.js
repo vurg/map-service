@@ -21,7 +21,7 @@ class MqttHandler {
 
         // Connection callback
         this.mqttClient.on('connect', () => {
-            console.log(`mqtt client connected`);
+            console.log(`mqtt client connected ` +  this.host);
         });
 
         // mqtt subscriptions
